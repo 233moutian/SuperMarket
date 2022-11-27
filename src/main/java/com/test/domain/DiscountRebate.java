@@ -29,16 +29,13 @@ public class DiscountRebate extends DiscountBase{
         ShoppingCart shoppingCart = customer.getShoppingCart();
         Map<Product, Integer> products = shoppingCart.getProducts();
         Integer count = products.get(Supermarket.PRODUCT_MAP.get(ProductEnum.STRAWBERRY));  // 删除前先拿到对象值，待会有用
+        if (count == null){     // 购物车没这个商品
+            return customer;
+        }
         products.remove(Supermarket.PRODUCT_MAP.get(ProductEnum.STRAWBERRY));        // 先删除，因为待会要改变这个key对象了
         Product strawberry = new Product(2,"草莓", new BigDecimal(13).multiply(new BigDecimal("0.8")), "P0002");
         products.put(strawberry, count);
         return customer;
     }
 
-    /*
-    * 客户有权不使用优惠
-    * */
-    public BigDecimal arithmetic(BigDecimal money) {
-        return money;
-    }
 }
